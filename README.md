@@ -30,6 +30,8 @@ Follow the next steps to install and quantize your llama model:
 
 Your local Llama model is now ready to use!
 
+Move the ggml-model-q4_0.bin q4_0 file into the model directory in /climateGuide. 
+
 
 ---ENVIRONEMENT VARAIBLES---
 Open the .env file using your prefered text editor and add your versions of the following environment variables into the .env file:
