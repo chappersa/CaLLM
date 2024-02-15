@@ -21,6 +21,7 @@ PINECONE_ENV = os.environ["PINECONE_ENV"]
 def wakeUpCaLLM():
     pinecone.init(api_key=PINECONE_API_TOKEN,environment=PINECONE_ENV)
     embeddings = HuggingFaceEmbeddings(model_name=HF_EMBEDDINGS_MODEL_NAME)
+    #index = pc.Index(PINECONE_INDEX_NAME)
     vectorstore = Pinecone.from_existing_index(PINECONE_INDEX_NAME, embeddings)
 
     prompt_template="""
@@ -52,7 +53,7 @@ def wakeUpCaLLM():
     callm = RetrievalQA.from_chain_type(
         llm = llm,
         chain_type="stuff",
-        retriever=vectorstore.as_retriever(search_kwargs={'k': 2}),
+        retriever=       vectorstore.as_retriever(search_kwargs={'k': 2}),
         chain_type_kwargs=chain_type_kwargs,
         #callbacks = callbacks
     )
