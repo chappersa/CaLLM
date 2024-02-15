@@ -1,14 +1,14 @@
 import os
 import sys
 import pinecone
-from helper import scrape, text_to_speech
-from langchain.embeddings import HuggingFaceEmbeddings
+from helper import scrape
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from dotenv import load_dotenv
 from langchain.prompts import PromptTemplate
-from langchain.llms import CTransformers
+from langchain_community.llms import CTransformers
 from langchain.chains import RetrievalQA
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.vectorstores import Pinecone
+from langchain_community.vectorstores import Pinecone 
 #from playsound import playsound
 
 load_dotenv()
@@ -17,6 +17,7 @@ PINECONE_INDEX_NAME = os.environ["PINECONE_INDEX_NAME"]
 HF_EMBEDDINGS_MODEL_NAME = os.environ["HF_EMBEDDINGS_MODEL_NAME"]
 PINECONE_API_TOKEN = os.environ["PINECONE_API_TOKEN"]
 PINECONE_ENV = os.environ["PINECONE_ENV"]
+HF_API_TOKEN = os.environ["HUGGINGFACEHUB_API_TOKEN"]
 
 user_input=input(f"Are you adding to the repository? y/n: ")
 if user_input=='y':
@@ -24,7 +25,7 @@ if user_input=='y':
     vectorstore = scrape(url)
 if user_input=='n':
     pinecone.init(api_key=PINECONE_API_TOKEN,environment=PINECONE_ENV)
-    embeddings = HuggingFaceEmbeddings(model_name=HF_EMBEDDINGS_MODEL_NAME)
+    embeddings = HuggingFaceInferenceAPIEmbeddings(api_key = HF_API_TOKEN, model_name=HF_EMBEDDINGS_MODEL_NAME)
     vectorstore = Pinecone.from_existing_index(PINECONE_INDEX_NAME, embeddings)
 
 prompt_template="""
@@ -39,17 +40,17 @@ Question: {question}
 Only return the helpful answer below and nothing else.
 Helpful answer:
 """
-
 PROMPT=PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
 chain_type_kwargs={"prompt": PROMPT}
 callbacks = [StreamingStdOutCallbackHandler()]
-
-llm=CTransformers(model="../llama.cpp/models/7B/ggml-model-q4_0.bin",
-                  model_type="llama",
-                  config={'max_new_tokens':512,
+config={'max_new_tokens':512,
                           'temperature':0,
-                          'context_length':2048},
+                          'context_length':2048}
+llm=CTransformers(model="model/ggml-model-q4_0.bin",
+                  model_type="llama",
+                  gpu_layers = 36,
+                  config = config,
                   callbacks = callbacks)
 
 qa = RetrievalQA.from_chain_type(
@@ -68,9 +69,9 @@ while True:
     if user_input=='':
         continue
     print("Thinking...")
-    result=qa({"query": user_input})
+    result=qa.invoke({"query": user_input})
     response = result["result"]
     print('\n')
 
-    text_to_speech(response)
+    #text_to_speech(response)
     #playsound('response.mp3')

@@ -2,7 +2,7 @@ import os
 import sys
 import pinecone
 from helper import scrape
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from dotenv import load_dotenv
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import CTransformers
@@ -16,12 +16,12 @@ PINECONE_INDEX_NAME = os.environ["PINECONE_INDEX_NAME"]
 HF_EMBEDDINGS_MODEL_NAME = os.environ["HF_EMBEDDINGS_MODEL_NAME"]
 PINECONE_API_TOKEN = os.environ["PINECONE_API_TOKEN"]
 PINECONE_ENV = os.environ["PINECONE_ENV"]
+HF_API_TOKEN = os.environ["HUGGINGFACEHUB_API_TOKEN"]
 
 
 def wakeUpCaLLM():
     pinecone.init(api_key=PINECONE_API_TOKEN,environment=PINECONE_ENV)
-    embeddings = HuggingFaceEmbeddings(model_name=HF_EMBEDDINGS_MODEL_NAME)
-    #index = pc.Index(PINECONE_INDEX_NAME)
+    embeddings = HuggingFaceInferenceAPIEmbeddings(api_key= HF_API_TOKEN, model_name=HF_EMBEDDINGS_MODEL_NAME)
     vectorstore = Pinecone.from_existing_index(PINECONE_INDEX_NAME, embeddings)
 
     prompt_template="""
@@ -53,7 +53,7 @@ def wakeUpCaLLM():
     callm = RetrievalQA.from_chain_type(
         llm = llm,
         chain_type="stuff",
-        retriever=       vectorstore.as_retriever(search_kwargs={'k': 2}),
+        retriever=vectorstore.as_retriever(search_kwargs={'k': 2}),
         chain_type_kwargs=chain_type_kwargs,
         #callbacks = callbacks
     )
@@ -62,6 +62,6 @@ def wakeUpCaLLM():
 
 def runCaLLM(callm, user_input):
 
-    result=callm({"query": user_input})
+    result=callm.invoke({"query": user_input})
     response = result["result"]
     return response

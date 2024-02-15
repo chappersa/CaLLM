@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 from langchain_community.utilities import ApifyWrapper
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 #from langchain_community.document_loaders import Document
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_core.documents import Document
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain_community.vectorstores import Pinecone
 #from gtts import gTTS
 
@@ -14,6 +15,7 @@ PINECONE_API_TOKEN = os.environ["PINECONE_API_TOKEN"]
 PINECONE_ENV = os.environ["PINECONE_ENV"]
 PINECONE_INDEX_NAME = os.environ["PINECONE_INDEX_NAME"]
 HF_EMBEDDINGS_MODEL_NAME = os.environ["HF_EMBEDDINGS_MODEL_NAME"]
+HF_API_TOKEN = os.environ["HUGGINGFACEHUB_API_TOKEN"]
 
 
 
@@ -29,7 +31,7 @@ def scrape(url):
         actor_id = "lukaskrivka/article-extractor-smart",
         run_input = {"startUrls": [{ "url": url }]},
         #Need to figure out this bit
-        dataset_mapping_function = lambda item: Document(
+        dataset_mapping_function = lambda item : Document(
             page_content=item["text"] or "", metadata={"source": item["url"]}
         ),
     )
@@ -50,7 +52,7 @@ def scrape(url):
 
     index_name = PINECONE_INDEX_NAME
     embeddings_model_name = HF_EMBEDDINGS_MODEL_NAME
-    embeddings = HuggingFaceEmbeddings(model_name=embeddings_model_name)
+    embeddings = HuggingFaceInferenceAPIEmbeddings(api_key = HF_API_TOKEN, model_name=embeddings_model_name)
 
     #create a new index
     vectorstore = Pinecone.from_documents(docs_chunks, embeddings, index_name=index_name)
@@ -60,7 +62,8 @@ def scrape(url):
 
 def getVectorstore():
     pinecone.init(api_key=PINECONE_API_TOKEN,environment=PINECONE_ENV)
-    embeddings = HuggingFaceEmbeddings(model_name=HF_EMBEDDINGS_MODEL_NAME)
+    embeddings_model_name = HF_EMBEDDINGS_MODEL_NAME
+    embeddings = HuggingFaceInferenceAPIEmbeddings(api_key = HF_API_TOKEN, model_name=embeddings_model_name)
     vectorstore = Pinecone.from_existing_index(PINECONE_INDEX_NAME, embeddings)
     return vectorstore
 
