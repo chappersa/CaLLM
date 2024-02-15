@@ -30,7 +30,9 @@ Follow the next steps to install and quantize your llama model:
 
 Your local Llama model is now ready to use!
 
+Create a directory in the /climateGuide directory called /model.
 Move the ggml-model-q4_0.bin q4_0 file into the model directory in /climateGuide. 
+The llama and llama.cpp directories can now be deleted.
 
 
 ---ENVIRONEMENT VARAIBLES---
