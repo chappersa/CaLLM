@@ -10,6 +10,7 @@ from langchain.chains import RetrievalQA
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain_community.vectorstores import Pinecone 
 #from playsound import playsound
+from accelerate import Accelerator
 
 load_dotenv()
 HUGGINGFACEHUB_API_TOKEN = os.environ["HUGGINGFACEHUB_API_TOKEN"]
@@ -44,14 +45,17 @@ PROMPT=PromptTemplate(template=prompt_template, input_variables=["context", "que
 
 chain_type_kwargs={"prompt": PROMPT}
 callbacks = [StreamingStdOutCallbackHandler()]
+
+accelerator = Accelerator()
 config={'max_new_tokens':512,
                           'temperature':0,
-                          'context_length':2048}
+                          'context_length':2048, 'gpu_layers':50}
 llm=CTransformers(model="model/ggml-model-q4_0.bin",
                   model_type="llama",
                   gpu_layers = 36,
                   config = config,
                   callbacks = callbacks)
+llm, config = accelerator.prepare(llm, config)
 
 qa = RetrievalQA.from_chain_type(
     llm = llm,
