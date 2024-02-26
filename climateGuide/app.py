@@ -9,7 +9,7 @@ app = Flask(__name__)
 def home():
     global callm 
     callm = wakeUpCaLLM()
-    return render_template("index.html")
+    #return render_template("index.html")
 
 @app.route("/getResponse")
 def get_bot_response():

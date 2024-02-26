@@ -112,6 +112,17 @@ function CaLLM_shortcodes_init()
                         </div>
                     </div>
                     <script>
+                          function makeInitialCall() {
+                            jQuery.get("http://vw-node04.cs.st-andrews.ac.uk:5002/", function() {
+                                console.log("CaLLM awake");
+                            });
+                          }
+                    
+                        // Call the function when the page is loaded
+                        $(document).ready(function() {
+                            makeInitialCall();
+                        });
+
                         function getResponse() {
                             var rawText = jQuery("#textInput").val();
                             var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
