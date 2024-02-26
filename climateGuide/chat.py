@@ -9,7 +9,6 @@ from langchain_community.llms import CTransformers
 from langchain.chains import RetrievalQA
 #from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain_community.vectorstores import Pinecone
-from accelerate import Accelerator
 
 load_dotenv()
 HUGGINGFACEHUB_API_TOKEN = os.environ["HUGGINGFACEHUB_API_TOKEN"]
@@ -42,17 +41,13 @@ def wakeUpCaLLM():
 
     chain_type_kwargs={"prompt": PROMPT}
     #callbacks = [StreamingStdOutCallbackHandler()]
-    accelerator = Accelerator()
     config={'max_new_tokens':512,
                             'temperature':0,
-                            'context_length':2048, 'gpu_layers':36}
+                            'context_length':2048}
     llm=CTransformers(model="model/ggml-model-q4_0.bin",
                     model_type="llama",
-                    gpu_layers = 36,
                     config = config,
                     )
-
-    llm, config = accelerator.prepare(llm, config)
 
     callm = RetrievalQA.from_chain_type(
         llm = llm,
