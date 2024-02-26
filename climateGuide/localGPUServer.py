@@ -1,10 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from caLLMVersions.GPUCaLLM import wakeUpCaLLM, runCaLLM
 
-
-from GPUCaLLM import wakeUpCaLLM, runCaLLM
-
-
 callm = 0
 
 app = Flask(__name__)
@@ -13,7 +9,7 @@ app = Flask(__name__)
 def home():
     global callm 
     callm = wakeUpCaLLM()
-    return render_template("templates/index.html")
+    return render_template("index.html")
 
 @app.route("/getResponse")
 def get_bot_response():
