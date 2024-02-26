@@ -11,7 +11,7 @@ def home():
     callm = wakeUpCaLLM()
     return render_template("index.html")
 
-@app.route("/get")
+@app.route("/getResponse")
 def get_bot_response():
  if callm==0:
     print("ERROR: CaLLM is not awake")

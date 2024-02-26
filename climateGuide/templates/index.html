@@ -52,16 +52,28 @@
         line-height: 30px;
       }
       .botText span {
-        background-color: #4169e1;
+        background-color: #446b46;
         padding: 10px;
         border-radius: 2px;
-      }n
+      }
+      .thinkingText {
+        color: white;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: left;
+        line-height: 30px;
+      }
+      .thinkingText span {
+        background-color: #446b46;
+        padding: 10px;
+        border-radius: 2px;
+      }
       .boxed {
         margin-left: auto;
         margin-right: auto;
         width: 78%;
         margin-top: 60px;
-        border: 1px solid green;
+        border: 5px solid #446b46;
       }
     </style>
 </head>
@@ -77,20 +89,23 @@
                     </p>
                 </div>
                 <div id="userInput">
-                    <input id="textInput" type="text" name="msg" placeholder="Message" style="width: 300px;">
+                    <input id="textInput" type="text" name="msg" placeholder="Ask CaLLM a Question">
                 </div>
             </div>
             <script>
                 function getBotResponse() {
                     var rawText = $("#textInput").val();
                     var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+                    var thinkingHtml = '<p class="thinkingText"><span> Let me think... </span></p>';
                     $("#textInput").val("");
                     $("#chatbox").append(userHtml);
+                    $("#chatbox").append(thinkingHtml);
                     document
                         .getElementById("userInput")
                         .scrollIntoView({ block: "start", behavior: "smooth" });
-                    $.get("/get", { msg: rawText }).done(function (data) {
+                    $.get("/getResponse", { msg: rawText }).done(function (data) {
                         var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+                        $(".thinkingText").remove();
                         $("#chatbox").append(botHtml);
                         document
                             .getElementById("userInput")
