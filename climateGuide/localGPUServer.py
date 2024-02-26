@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request, jsonify
-from chat import wakeUpCaLLM, runCaLLM
+from caLLMVersions.GPUCaLLM import wakeUpCaLLM, runCaLLM
+
+
+from GPUCaLLM import wakeUpCaLLM, runCaLLM
+
 
 callm = 0
 
@@ -9,7 +13,7 @@ app = Flask(__name__)
 def home():
     global callm 
     callm = wakeUpCaLLM()
-    #return render_template("index.html")
+    return render_template("templates/index.html")
 
 @app.route("/getResponse")
 def get_bot_response():
@@ -25,6 +29,6 @@ def get_bot_response():
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response    
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port= '5002')
+    app.run(host='0.0.0.0', port= '5003')
     
 
