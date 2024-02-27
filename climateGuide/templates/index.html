@@ -18,15 +18,20 @@
 				margin-left: auto;
 				margin-right: auto;
 				width: 85%;
-				max-height: 350px;
+				max-height: 500px;
 				margin-top: 10px;
 				overflow: auto;
 			  }
 			  #userInput {
 				margin-left: auto;
 				margin-right: auto;
-				width: 40%;
 				margin-top: 60px;
+				position: absolute;
+				bottom: 0;
+				width: 60%;
+				padding: 10px;
+				left: 50%;
+    			transform: translateX(-50%);
 			  }
 			  #textInput {
 				border: none;
@@ -80,11 +85,12 @@
 				margin-left: auto;
 				margin-right: auto;
 				width: 100%;
-				max-height: 400px;
+				min-height: 600px;
 				margin-top: 60px;
 				margin-bottom: 60px;
 				border: 2px solid #e3815f;
 				background-color: #f0f0f0;
+				position: relative;
 			  }
 			  h1 {
 				font-family: 'Anton', sans-serif; 
@@ -135,38 +141,32 @@
                             <input id="textInput" type="text" name="msg" placeholder="Ask CaLLM a Question">
                         </div>
                       </div>
-                    <script>
-                          function makeInitialCall() {
-                            jQuery.get("http://vw-node04.cs.st-andrews.ac.uk:5002/", function() {
-                                console.log("CaLLM awake");
-                            });
-                          }
-                    
-                        $(document).ready(function() {
-                            makeInitialCall();
-                        });
-
-                        function getResponse() {
-                            var rawText = jQuery("#textInput").val();
-                            var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
-                            var thinkingHtml = '<p class="thinkingText"><span> Let me think... </span></p>';
-                            jQuery("#textInput").val("");
-                            jQuery("#chatbox").append(userHtml);
-                            jQuery("#chatbox").append(thinkingHtml);
-                            document.getElementById("userInput");
-                            jQuery.get("http://vw-node04.cs.st-andrews.ac.uk:5002/getResponse", { msg: rawText }).done(function (data) {
-                                var botHtml = '<p class="botText"><span>' + data + "</span></p>";
-                                $(".thinkingText").remove();
-                                jQuery("#chatbox").append(botHtml);
-                                document.getElementById("userInput");
-                            });
-                        }
-                        jQuery("#textInput").keypress(function (e) {
-                            if (e.which == 13) {
-                                getResponse();
-                            }
-                        });
-                    </script>
+					  <script>
+						function getResponse() {
+							var rawText = $("#textInput").val();
+							var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+							var thinkingHtml = '<p class="thinkingText"><span> Let me think... </span></p>';
+							$("#textInput").val("");
+							$("#chatbox").append(userHtml);
+							$("#chatbox").append(thinkingHtml);
+							document
+								.getElementById("userInput")
+								.scrollIntoView({ block: "start", behavior: "smooth" });
+							$.get("/getResponse", { msg: rawText }).done(function (data) {
+								var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+								$(".thinkingText").remove();
+								$("#chatbox").append(botHtml);
+								document
+									.getElementById("userInput")
+									.scrollIntoView({ block: "start", behavior: "smooth" });
+							});
+						}
+						$("#textInput").keypress(function (e) {
+							if (e.which == 13) {
+								getResponse();
+							}
+						});
+					</script>
                 </div>
                 <div class="buttonContainer">
                   <!-- Buttons -->

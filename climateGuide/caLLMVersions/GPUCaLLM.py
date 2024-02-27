@@ -45,11 +45,11 @@ def wakeUpCaLLM():
 
     config={'max_new_tokens':512,
                             'temperature':0,
-                            'context_length':2048, 'gpu_layers':36
+                            'context_length':2048, 'gpu_layers':5000
                             }
     llm=CTransformers(model="model/ggml-model-q4_0.bin",
                     model_type="llama",
-                    gpu_layers = 36,
+                    gpu_layers = 5000,
                     config = config,
                     #callbacks = callbacks
                     )
