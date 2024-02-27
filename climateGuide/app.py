@@ -39,4 +39,3 @@ def addToRepo():
       message = "Data could not be added"
    else:
       message = "Data successfully added!"
-    return message
