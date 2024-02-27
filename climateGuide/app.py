@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from caLLMVersions.GPUCaLLM import wakeUpCaLLM, runCaLLM
+from repoManager import add
 
 callm = None
 
@@ -29,4 +30,13 @@ def getResponse():
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port= '31415')
     
-
+@app.route("/addToRepo")
+def addToRepo():
+   data = request.args.get('url')
+   status = add(data)
+   message = None
+   if status == 0:
+      message = "Data could not be added"
+   else:
+      message = "Data successfully added!"
+    return message
