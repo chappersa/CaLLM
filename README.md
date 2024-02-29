@@ -40,7 +40,7 @@
 
 ###
 
-<p align="left">Open the .env file using your preferred text editor and add your versions of the following environment variables into the .env file:<br><br>HUGGINGFACEHUB_API_TOKEN <br>HF_EMBEDDINGS_MODEL_NAME <br>PINECONE_API_TOKEN <br>PINECONE_ENV<br>PINECONE_INDEX_NAME<br>ADMIN_PASSWORD <br>SERVER_PORT</p>
+<p align="left">Open the .env file using your preferred text editor and add your versions of the following environment variables into the .env file:<br><br>HUGGINGFACEHUB_API_TOKEN (Your Hugging Face Hub API key)<br>HF_EMBEDDINGS_MODEL_NAME (The Hugging Face model embeddings name you want to use) <br>PINECONE_API_TOKEN (Your Pinecone vector database API key) <br>PINECONE_ENV (The Pinecone environment of your vector database)<br>PINECONE_INDEX_NAME (The index of the Pinecone vector database) <br>ADMIN_PASSWORD (Your admin password for adding information to the repository) <br>SERVER_PORT (The server port number to run the back end)</p>
 
 ###
 
