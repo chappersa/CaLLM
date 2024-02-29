@@ -2,7 +2,14 @@
 
 ###
 
-<p align="left">This is the implementation of my CS4098 Minor Software Project that provides the server and a Word Press plug-in front-end for a climate conscious chat bot that can be given specialised knowledge by adding to the information repository it is using to answer questions in an informed way.</p>
+<p align="left">This is the implementation of my CS4098 Minor Software Project that provides the server and a Word Press plug-in front-end for a climate conscious chat bot that can be given specialised knowledge by adding to the information repository it is using to answer questions in an informed way. <br>It uses ggerganov's llama.cpp quantised model as the LLM and the Retrieval Augmented Generation (RAG) technique to provide context specific information. Langchain, Hugging Face and Pinecone are used to build the RAG chain. </br> </p>
+
+###
+
+<div align="center">
+  <img height="200" src="https://en-support.files.wordpress.com/2023/10/shortcode-block-slash-command.png"  />
+</div>
+
 
 ###
 
@@ -40,7 +47,7 @@
 
 ###
 
-<p align="left">Open the .env file using your preferred text editor and add your versions of the following environment variables into the .env file:<br><br>HUGGINGFACEHUB_API_TOKEN (Your Hugging Face Hub API key)<br>HF_EMBEDDINGS_MODEL_NAME (The Hugging Face model embeddings name you want to use) <br>PINECONE_API_TOKEN (Your Pinecone vector database API key) <br>PINECONE_ENV (The Pinecone environment of your vector database)<br>PINECONE_INDEX_NAME (The index of the Pinecone vector database) <br>ADMIN_PASSWORD (Your admin password for adding information to the repository) <br>SERVER_PORT (The server port number to run the back end)</p>
+<p align="left">Open the .env file using your preferred text editor and add your versions of the following environment variables into the .env file:<br><br>HUGGINGFACEHUB_API_TOKEN = (Your Hugging Face Hub API key)<br>HF_EMBEDDINGS_MODEL_NAME = (The Hugging Face model embeddings name you want to use) <br>PINECONE_API_TOKEN = (Your Pinecone vector database API key) <br>PINECONE_ENV = (The Pinecone environment of your vector database)<br>PINECONE_INDEX_NAME = (The index of the Pinecone vector database) <br>ADMIN_PASSWORD = (Your admin password for adding information to the repository) <br>SERVER_PORT = (The server port number to run the back end)</p>
 
 ###
 
