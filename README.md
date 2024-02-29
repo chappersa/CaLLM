@@ -10,7 +10,7 @@
 
 ###
 
-<p align="left">This is the implementation of my CS4098 Minor Software Project that provides the server and a Word Press plug-in front-end for a climate conscious chat bot that can be given specialised knowledge by adding to the information repository it is using to answer questions in an informed way. <br>It uses ggerganov's llama.cpp quantised model as the LLM and the Retrieval Augmented Generation (RAG) technique to provide context specific information. Langchain, Hugging Face and Pinecone are used to build the RAG chain. </br> </p>
+<p align="left">This is the implementation of my CS4098 Minor Software Project that provides the server and a Word Press plug-in front-end for a climate conscious chat bot that can be given specialised knowledge by adding to the information repository it is using to answer questions in an informed way. <br><br>It uses ggerganov's llama.cpp quantised model as the LLM and the Retrieval Augmented Generation (RAG) technique to provide context specific information. Langchain, Hugging Face and Pinecone are used to build the RAG chain. <br><br> For an example of the plug-in in use, check out: https://bmr.openvirtualworlds.org/home/discover-the-marine-reserve/callm/ </p>
 
 ###
 
