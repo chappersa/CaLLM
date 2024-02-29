@@ -1,15 +1,16 @@
+
+###
+<div align="center">
+  <img height="200" src="CaLLM.png"  />
+</div>
+
+###
+
 <h1 align="left">CaLLM Server and Plug-in</h1>
 
 ###
 
 <p align="left">This is the implementation of my CS4098 Minor Software Project that provides the server and a Word Press plug-in front-end for a climate conscious chat bot that can be given specialised knowledge by adding to the information repository it is using to answer questions in an informed way. <br>It uses ggerganov's llama.cpp quantised model as the LLM and the Retrieval Augmented Generation (RAG) technique to provide context specific information. Langchain, Hugging Face and Pinecone are used to build the RAG chain. </br> </p>
-
-###
-
-<div align="center">
-  <img height="200" src="callm.png"  />
-</div>
-
 
 ###
 
