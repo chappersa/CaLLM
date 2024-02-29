@@ -1,7 +1,7 @@
 
 ###
 <div align="center">
-  <img height="200" src="CaLLM.png"  />
+  <img height="400" src="CaLLM.png"  />
 </div>
 
 ###
