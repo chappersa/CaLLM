@@ -56,6 +56,6 @@
 
 ###
 
-<p align="left">1. Navigate to /caLLMServer directory<br>2. Activate venv: source bin/activate<br>3. Install requirements: python3 -m pip install -r requirements.tx<br>4. Run server: python3 app.py</p>
+<p align="left">1. Navigate to /caLLMServer directory<br>2. Activate venv: source bin/activate<br>3. Install requirements: python3 -m pip install -r requirements.tx<br>4. Run server: python3 app.py <br><br> By default, CaLLM uses GPU optimisation; however, it can also work on a CPU by switching the CaLLM Version in the app.py file to CaLLM not GPUCaLLM. </p>
 
 ###
