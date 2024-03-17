@@ -56,7 +56,7 @@ def wakeUpCaLLM():
     callm = RetrievalQA.from_chain_type(
         llm = llm,
         chain_type="stuff",
-        retriever=vectorstore.as_retriever(search_kwargs={'k': 3, 'score_threshold': 0.5}),
+        retriever=vectorstore.as_retriever(search_kwargs={'k': 3}),
         chain_type_kwargs=chain_type_kwargs,
     )
     return callm
