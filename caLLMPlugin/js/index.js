@@ -1,10 +1,3 @@
-function makeInitialCall() {
-	jQuery.get("/wp-content/plugins/caLLMPlugin/query.php", function() {
-		console.log("CaLLM awake");
-	});
-}
-
-
 jQuery(document).ready(function($) {
    
     makeInitialCall();
@@ -27,14 +20,17 @@ jQuery(document).ready(function($) {
     jQuery("#addToRepositoryBtn").click(function() {
         authenticateAndAdd();
     });
-
-
-    jQuery("#aboutCallmBtn").click(function() {
-        callmInfo();
-    });
 });
 
 
+//Wakes up CaLLM
+function makeInitialCall() {
+	jQuery.get("/wp-content/plugins/caLLMPlugin/query.php", function() {
+		console.log("CaLLM awake");
+	});
+}
+
+//Gets the response from the back end using the user input
 function getResponse() {
 	var rawText = jQuery("#textInput").val();
 	var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
@@ -51,35 +47,7 @@ function getResponse() {
 	});
 }
 
-function callmInfo(){
-swal({
-    title: "Who is CaLLM?",
-    text: "CaLLM is a guide that is powered by the open-source Meta AI Llama2 large language model. This means he has been trained on their large dataset. However, to increase his specificity and knowledge base, I have used a Retrieval Augmentation Generation technique so that we can add to his repository of known information that he is able to call on when answering a question. This is all to try and provide some accuracy and precision in the use of LLMs, particularly around essential conversations including climate change and heritage. For more information on how this was achieved, check out my github.",
-    buttons: {
-        MoreOnLlama: {
-            text: "Llama2",
-            value: "more_on_llama",
-        },
-		confirm: true,
-        dissReport: {
-            text: "GitHub",
-            value: "github"
-        }
-    }
-}).then((value) => {
-    switch (value) {
-        case "more_on_llama":
-             window.location.href = "https://llama.meta.com/llama2/";
-            break;
-        case "github":
-            window.location.href = "https://github.com/chappersa/CaLLM";
-            break;
-        default:
-            break;
-    }
-});
-}
-																				
+//Authenticate the user and then add the information provided to the repository
 function authenticateAndAdd() {
 		swal({
 				  
