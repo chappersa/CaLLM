@@ -1,3 +1,4 @@
+#Deals with the set-up of the CaLLM model using Llama  
 import os
 import sys
 import pinecone
@@ -42,6 +43,7 @@ def wakeUpCaLLM():
     chain_type_kwargs={"prompt": PROMPT}
     accelerator = Accelerator()
 
+    #Setting up the parameters of the Llama model
     config={'max_new_tokens':512,
                             'temperature':0,
                             'context_length':2048, 'gpu_layers':43
@@ -53,6 +55,7 @@ def wakeUpCaLLM():
                     )
     llm, config = accelerator.prepare(llm, config)
 
+    #Retrieval configuration, how the relevant data is collected
     callm = RetrievalQA.from_chain_type(
         llm = llm,
         chain_type="stuff",
