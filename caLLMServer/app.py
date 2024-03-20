@@ -1,9 +1,11 @@
+#Dealing with calls from the front-end 
 import os
 from flask import Flask, request
 from caLLMVersions.GPUCaLLM import wakeUpCaLLM, runCaLLM
 from repoManager import add, authenticated
 
 callm = None
+#Server port dependent on the .env file
 SEVER_PORT = os.environ["SERVER_PORT"] 
 app = Flask(__name__)
 
