@@ -9,13 +9,12 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.document_loaders import WikipediaLoader
 from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain_community.vectorstores import Pinecone
-from bs4 import BeautifulSoup
 from pypdf import PdfReader
 from urllib.parse import urlparse
 
 
 load_dotenv()
-
+#Get the environment variables (should be set in the .env)
 PINECONE_API_TOKEN = os.environ["PINECONE_API_TOKEN"]
 PINECONE_ENV = os.environ["PINECONE_ENV"]
 PINECONE_INDEX_NAME = os.environ["PINECONE_INDEX_NAME"]
@@ -23,6 +22,7 @@ HF_EMBEDDINGS_MODEL_NAME = os.environ["HF_EMBEDDINGS_MODEL_NAME"]
 HF_API_TOKEN = os.environ["HUGGINGFACEHUB_API_TOKEN"]
 ADMIN_PASSWORD = os.environ["ADMIN_PASSWORD"]
 
+#Add data to the repository
 def add(data):
     wiki = False
     pdf = False
@@ -91,12 +91,14 @@ def add(data):
     success = "Data successfully added to the repository"
     return success
 
+#Check the user has the correct password, set in the .env file
 def authenticated(password):
     if(password == ADMIN_PASSWORD):
         return "correct"
     else:
         return "incorrect"
-    
+
+#Get the vector database using the keys in the .env file
 def getVectorstore():
     pinecone.init(api_key=PINECONE_API_TOKEN,environment=PINECONE_ENV)
     embeddings_model_name = HF_EMBEDDINGS_MODEL_NAME
